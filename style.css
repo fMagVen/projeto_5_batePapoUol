@@ -1,0 +1,75 @@
+body
+{
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+
+.flex
+{
+    display: flex;
+}
+.centralize
+{
+    justify-content: center;
+    align-items: center;
+}
+.bar-spacing
+{
+    width: 100%;
+    justify-content: space-between;
+    margin: 0 21px;
+}
+.bar-sizing
+{
+    width: 100%;
+    height: 80px;
+}
+.white-background
+{
+    background-color: #fff;
+}
+.weight-400
+{
+    font-weight: 400;
+}
+
+.header
+{
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    top: 0px;
+}
+.logo
+{
+    width: 75px;
+    height: 53px;
+}
+.people-header
+{
+    width: 45px;
+    height: 45px;
+}
+
+.chat
+{
+    background-color: #F3F3F3;
+    height: 1000px;
+}
+
+.write-and-send
+{
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    bottom: 0px;
+}
+.input
+{
+    border: none;
+    font-size: 18px;
+    font-style: italic;
+}
+.paper-plane-sender
+{
+    width: 26px;
+    height: 26px;
+}
