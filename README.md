@@ -10,6 +10,14 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.2.5
+en --
+new messages load every 3 seconds
+window is auto-placed at the last received message
+pt --
+novas mensagens carregam a cada 3 segundos
+a janela é auto realocada à ultima mensagem recebida
+
 0.2
 en --
 messages can now be seen!

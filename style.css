@@ -47,7 +47,7 @@ body
 .header
 {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-    position: absolute;
+    position: fixed;
     top: 0px;
 }
 .logo
@@ -105,7 +105,7 @@ body
 .write-and-send
 {
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
-    position: absolute;
+    position: fixed;
     bottom: 0px;
 }
 .input
