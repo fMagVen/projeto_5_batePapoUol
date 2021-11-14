@@ -4,6 +4,68 @@ body
     font-family: 'Roboto', sans-serif;
 }
 
+.login-screen
+{
+    flex-direction: column;
+}
+.login-logo
+{
+    margin-top: 72px;
+}
+.login-input
+{
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    height: 54px;
+    width: 261px;
+    text-align: center;
+    margin-top: 94px;
+}
+.login-input::placeholder
+{
+    color: #AEAEAE;
+}
+.error-align
+{
+    flex-direction: column;
+    width: 267px;
+    margin-top: 10px;
+
+}
+.login-name-error
+{
+    color: red;
+    width: 240px;
+}
+.error-2
+{
+    width: 180px;
+}
+.login-button
+{
+    background: #E7E7E7;
+    border: none;
+    border-radius: 9px;
+    width: 109px;
+    height: 45px;
+    margin-top: 15px;
+}
+.login-bt-text
+{
+    color: #696969;
+}
+.login-logo
+{
+    width: 130px;
+    height: 92px;
+}
+.loading-gif
+{
+    width: 100px;
+    height: 100px;
+    margin-top: 150px;
+}
+
 .flex
 {
     display: flex;
@@ -43,6 +105,10 @@ body
 {
     font-size: 14px;
 }
+.font-size-18
+{
+    font-size: 18px;
+}
 
 .header
 {
@@ -75,6 +141,8 @@ body
 .message-container-internal
 {
     padding: 0 10px 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .gray-color
 {

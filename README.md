@@ -10,6 +10,14 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.3
+en --
+login screen implemented, enter your name and see the chat!
+your login name can't be empty, bigger than 255 characters or already taken
+pt --
+tela de login implementada, coloque seu nome e veja o chat!
+seu nome de login não pode ser vazio, maior que 255 caracteres ou já estar sendo usado
+
 0.2.5
 en --
 new messages load every 3 seconds
