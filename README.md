@@ -10,6 +10,12 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.2
+en --
+messages can now be seen!
+pt --
+mensagens agora podem ser vistas!
+
 0.1
 en --
 initial commit, requested main layout ready

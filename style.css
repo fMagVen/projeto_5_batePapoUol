@@ -21,8 +21,11 @@ body
 }
 .bar-sizing
 {
-    width: 100%;
     height: 80px;
+}
+.full-width
+{
+    width: 100%;
 }
 .white-background
 {
@@ -31,6 +34,14 @@ body
 .weight-400
 {
     font-weight: 400;
+}
+.weight-700
+{
+    font-weight: 700;
+}
+.font-size-14
+{
+    font-size: 14px;
 }
 
 .header
@@ -52,8 +63,43 @@ body
 
 .chat
 {
+    padding: 106px 0;
     background-color: #F3F3F3;
-    height: 1000px;
+}
+.message-container-external
+{
+    padding: 12px 0 12px 0;
+    margin: 4px 0 4px 0;
+    width: 100%;
+}
+.message-container-internal
+{
+    padding: 0 10px 0 10px;
+}
+.gray-color
+{
+    color: #AAAAAA;
+}
+.time-format
+{
+    padding-right: 5px;
+}
+.message-format
+{
+    padding: 0 1px 0 1px;
+    line-height: 20px;
+}
+.enter-leave
+{
+    background-color: #dcdcdc;
+}
+.public
+{
+    background-color: #fff;
+}
+.private
+{
+    background-color: #ffdede;
 }
 
 .write-and-send
