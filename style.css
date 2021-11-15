@@ -36,10 +36,7 @@ body
 {
     color: red;
     width: 240px;
-}
-.error-2
-{
-    width: 180px;
+    text-align: center;
 }
 .login-button
 {
@@ -61,9 +58,7 @@ body
 }
 .loading-gif
 {
-    width: 100px;
-    height: 100px;
-    margin-top: 150px;
+    width: 100%;
 }
 
 .flex
@@ -105,6 +100,10 @@ body
 {
     font-size: 14px;
 }
+.font-size-16
+{
+    font-size: 16px;
+}
 .font-size-18
 {
     font-size: 18px;
@@ -129,7 +128,7 @@ body
 
 .chat
 {
-    padding: 106px 0;
+    margin: 90px 0;
     background-color: #F3F3F3;
 }
 .message-container-external
@@ -141,8 +140,6 @@ body
 .message-container-internal
 {
     padding: 0 10px 0 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 .gray-color
 {
@@ -186,4 +183,87 @@ body
 {
     width: 26px;
     height: 26px;
+}
+
+.overflow-container
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.black-ground
+{
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+.sidebar
+{
+    height: 100%;
+    width: 256px;
+    background-color: white;
+    z-index: 2;
+    overflow-y: auto;
+}
+.on-screen
+{
+    position:fixed;
+    top: 0;
+    right: 0;
+    transition: 0.3s;
+}
+.off-screen
+{
+    position: fixed;
+    top: 0;
+    right: -256px;
+    transition: 0.3s;
+}
+.hidden
+{
+    display: none;
+}
+.sidebar-titles
+{
+    margin-top: 25px;
+    text-align: center;
+}
+.sidebar-items
+{
+    flex-direction: column;
+    margin: 20px 0 0 17px;
+    gap: 15px;
+}
+.sidebar-icon
+{
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+}
+.sidebar-item
+{
+    align-items: center;
+}
+.sidebar-name-and-check
+{
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.sidebar-name-container
+{
+    width: 140px;
+}
+.checkmark
+{
+    width: 12px;
+    height: 10px;
+    margin-right: 20px;
+}
+.margem-gambiarra
+{
+    margin-bottom: 20px;
 }

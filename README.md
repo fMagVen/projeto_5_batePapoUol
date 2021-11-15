@@ -10,6 +10,16 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.4
+en --
+sidebar implemented, it shows the active users in the chat
+to drag, tap the people icon on the top right corner
+to dismiss, tap the transparent black screen that pops behind it
+pt --
+barra lateral implementada, ela mostra os usuários ativos no chat
+para arrastar, pressione o ícone de pessoas no canto superior direito
+para dispensar, pressione a tela preta transparente que surge por trás
+
 0.3
 en --
 login screen implemented, enter your name and see the chat!

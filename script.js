@@ -1,4 +1,5 @@
-let firstTimeLoading = 1;
+let firstTimeLoadingChat = 1;
+let firstTimeLoadingSidebar = 1;
 
 let pageBody = document.querySelector(".body");
 pageBody.innerHTML = '';
@@ -8,8 +9,7 @@ pageBody.innerHTML =
     <img class="login-logo" src="/assets/logouologin.png" alt="logo uol">
     <input class="login-input font-size-18 font-weight-400" type="text" placeholder="Digite seu lindo nome">
     <div class="error-align flex centralize">
-        <span class="login-name-error error-1 font-size-18 font-weight-400"></span>
-        <span class="login-name-error error-2 font-size-18 font-weight-400"></span>
+        <span class="login-name-error font-size-18 font-weight-400"></span>
     </div>
     <button class="login-button"><span class="login-bt-text weight-400 font-size-18" onclick="loginAttempt()">Entrar</span></button>
 </div>
@@ -23,18 +23,14 @@ function loginAttempt()
     console.log(loginName);
     if(loginName == '')
     {
-        let loginNameEmpty = document.querySelector(".error-1");
+        let loginNameEmpty = document.querySelector(".login-name-error");
         loginNameEmpty.innerHTML = "Digite um nome de usuário!";
-        loginNameEmpty = document.querySelector(".error-2");
-        loginNameEmpty.innerHTML = '';
         return;
     }
     if(loginName.length > 255)
     {
-       let loginNameEmpty = document.querySelector(".error-1");
-       loginNameEmpty.innerHTML = "Seu nome deve ter";
-       loginNameEmpty = document.querySelector(".error-2");
-       loginNameEmpty.innerHTML = 'menos que 255 caracteres';
+       let loginNameTooLong = document.querySelector(".login-name-error");
+       loginNameTooLong.innerHTML = "Seu nome deve ter menos que 255 caracteres!"
        return;
     }
     let usernamePromise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: `${loginName}` });
@@ -48,12 +44,14 @@ function connectionMaintenance()
     `
     <div class="login-screen flex centralize">
         <img class="login-logo" src="/assets/logouologin.jpg" alt="logo uol">
-        <img class="loading-gif" src="/assets/logouologin.png" alt="animação carregando">
-        <span>Entrando</span>
+        <img class="loading-gif" src="/assets/logouologin.gif" alt="animação carregando">
+        <span class="loading-text weight-400 size-18">Entrando...</span>
     </div>
     `
     const messagesPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
+    const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
     messagesPromise.then(displayMessages, messagesError);
+    participantsPromise.then(loadSidebar, messagesError);
 }
 
 function loginError(error)
@@ -62,24 +60,20 @@ function loginError(error)
     if (error == "Error: Request failed with status code 400")
     {
         console.log(error);
-        const loginNameTaken1 = document.querySelector(".error-1");
-        const loginNameTaken2 = document.querySelector(".error-2");
-        loginNameTaken1.innerHTML = "Esse nome de usuário já está"
-        loginNameTaken2.innerHTML = "logado, escolha outro!"
+        const loginNameTaken = document.querySelector(".login-name-error");
+        loginNameTaken.innerHTML = "Esse nome de usuário já está<br>sendo usado, escolha outro!"
     }
     else {
         console.log(error);
-        const loginNameTaken1 = document.querySelector(".error-1");
-        const loginNameTaken2 = document.querySelector(".error-2");
-        loginNameTaken1.innerHTML = "Houve uma falha no servidor"
-        loginNameTaken2.innerHTML = "tente novamente mais tarde!"
+        const loginFail = document.querySelector(".login-name-error");
+        loginFail.innerHTML = "Houve uma falha no servidor, tente novamente mais tarde!"
     }
 
 }
 
 function displayMessages(response)
 {
-    if(firstTimeLoading)
+    if(firstTimeLoadingChat)
     {
         pageBody.innerHTML = '';
         pageBody.innerHTML =
@@ -87,7 +81,7 @@ function displayMessages(response)
         <header class="header flex centralize bar-sizing white-background full-width">
             <div class="logo-and-people flex bar-spacing">
                 <img class="logo" src="/assets/logouol.png" alt="logo uol">
-                <img class="people-header" src="/assets/people.png" alt="botao de pessoas no chat">
+                <img class="people-header" src="/assets/people.png" onclick="showSidebar()" alt="botao de pessoas no chat">
             </div>
         </header>
         <main class="chat">
@@ -98,6 +92,13 @@ function displayMessages(response)
                 <img class="paper-plane-sender" src="assets/paper-plane.png" alt="botao de enviar mensagem">
             </div>
         </footer>
+        <div class="black-ground hidden" onclick="hideSidebar()">
+        </div>
+        <aside class="sidebar off-screen">
+            <div class="sidebar-titles flex centralize">
+                    <span class="font-size-16 weight-700">Carregando...</span>
+            </div>
+        </aside>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="script.js"></script>
         `
@@ -111,7 +112,7 @@ function displayMessages(response)
             displayLocation.innerHTML +=
             `
             <div class="message-container-external full-width enter-leave">
-                <div class="message-container-internal">
+                <div class="message-container-internal overflow-container">
                     <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                     <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
                     <span class="user-interaction message-format font-size-14">${response.data[i].text}</span>
@@ -124,7 +125,7 @@ function displayMessages(response)
             displayLocation.innerHTML +=
             `
             <div class="message-container-external full-width public">
-                <div class="message-container-internal">
+                <div class="message-container-internal overflow-container">
                     <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                     <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
                     <span class="user-interaction message-format font-size-14">para</span>
@@ -139,7 +140,7 @@ function displayMessages(response)
             displayLocation.innerHTML +=
             `
             <div class="message-container-external full-width private">
-                <div class="message-container-internal">
+                <div class="message-container-internal overflow-container">
                     <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                     <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
                     <span class="user-interaction message-format font-size-14">reservadamente para</span>
@@ -153,9 +154,9 @@ function displayMessages(response)
     displayLocation.removeChild(displayLocation.lastChild);
     const lastMessage = displayLocation.lastChild;
     lastMessage.scrollIntoView();
-    if(firstTimeLoading)
+    if(firstTimeLoadingChat)
     {
-        firstTimeLoading = 0;
+        firstTimeLoadingChat = 0;
         const reloadingMessages = setInterval(reloadMessages, 3000);
     }
 }
@@ -169,4 +170,103 @@ function reloadMessages()
 {
     const messagesPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
     messagesPromise.then(displayMessages, messagesError);
+}
+
+function loadSidebar(whosOnline)
+{
+    if(document.querySelector(".sidebar") != null)
+    {
+        if(firstTimeLoadingSidebar)
+        {
+            let sidebarElement = document.querySelector(".sidebar");
+            sidebarElement.innerHTML =
+            `
+                <div class="sidebar-titles flex centralize">
+                    <span class="font-size-16 weight-700">Escolha um contato<br>para enviar mensagem:</span>
+                </div>
+                <div class="sidebar-items flex">
+                </div>
+                <div class="sidebar-titles">
+                    <span class="font-size-16 weight-700 flex centralize">Escolha a visibilidade:</span>
+                </div>
+                <div class="sidebar-items flex margem-gambiarra">
+                    <div class="sidebar-item flex">
+                        <img class="sidebar-icon" src="/assets/lock-open.png" alt="enviar publicamente">
+                        <div class="sidebar-name-and-check flex">
+                            <span class="sidebar-name weight-400 font-size-16">Público</span>
+                            <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                        </div>
+                    </div>
+                    <div class="sidebar-item flex">
+                        <img class="sidebar-icon" src="/assets/lock-closed.png" alt="enviar reservadamente">
+                        <div class="sidebar-name-and-check flex">
+                            <span class="sidebar-name weight-400 font-size-16">Reservadamente</span>
+                            <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                        </div>
+                    </div>
+                </div>
+            `
+        }
+        let peopleLoader = document.querySelector(".sidebar-items");
+        peopleLoader.innerHTML =
+        `
+        <div class="sidebar-item flex">
+            <img class="sidebar-icon" src="/assets/people.png" alt="enviar para todos">
+            <div class="sidebar-name-and-check flex">
+                <span class="sidebar-name weight-400 font-size-16">Todos</span>
+                <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+            </div>
+        </div>
+        `
+        for(let i = 0; i < whosOnline.data.length; i++)
+        {
+            peopleLoader.innerHTML +=
+            `
+            <div class="sidebar-item flex">
+                    <img class="sidebar-icon" src="/assets/person-circle.png" alt="">
+                    <div class="sidebar-name-and-check flex">
+                        <div class="sidebar-name-container overflow-container">
+                            <span class="sidebar-name weight-400 font-size-16">${whosOnline.data[i].name}</span>
+                        </div>
+                        <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                    </div>
+            </div>
+            `
+        }
+        if(firstTimeLoadingSidebar)
+        {
+            firstTimeLoadingSidebar = 0;
+            const reloadingParticipants = setInterval(reloadParticipants, 10000);
+        }
+    }
+    else
+    {
+        const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+        participantsPromise.then(loadSidebar, messagesError);
+    }
+
+}
+
+function reloadParticipants()
+{
+    const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+    participantsPromise.then(loadSidebar, messagesError);
+}
+
+function showSidebar()
+{
+    const slideSidebar = document.querySelector(".sidebar");
+    const chatLightSwitch = document.querySelector(".black-ground");
+    slideSidebar.classList.add("on-screen");
+    slideSidebar.classList.remove("off-screen");
+    chatLightSwitch.classList.remove("hidden");
+}
+
+function hideSidebar()
+{
+    const slideSidebar = document.querySelector(".sidebar");
+    const chatLightSwitch = document.querySelector(".black-ground");
+    slideSidebar.classList.add("off-screen");
+    slideSidebar.classList.remove("on-screen");
+    chatLightSwitch.classList.add("hidden");
 }
