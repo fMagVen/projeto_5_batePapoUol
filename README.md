@@ -10,6 +10,14 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.6
+en --
+send public or private messages directed to other users online, selecting them on the sidebar
+a green checkmark pops up indicating the selected user to send a message to
+pt --
+envie mensagens públicas ou privadas direcionadas a outros usuários online, selecionando-os no menu lateral
+um check verde aparece indicando o usuário selecionado para quem a mensagem será enviada
+
 0.5
 en --
 send messages globally tapping the paper plane button or the enter key

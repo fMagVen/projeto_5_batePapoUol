@@ -87,7 +87,7 @@ function displayMessages(response)
         pageBody.innerHTML =
         `
         <header class="header flex centralize bar-sizing white-background full-width">
-            <div class="logo-and-people flex bar-spacing">
+            <div class="logo-and-people flex header-spacing">
                 <img class="logo" src="/assets/logouol.png" alt="logo uol">
                 <img class="people-header" src="/assets/people.png" onclick="showSidebar()" alt="botao de pessoas no chat">
             </div>
@@ -95,21 +95,29 @@ function displayMessages(response)
         <main class="chat">
         </main>
         <footer class="write-and-send flex centralize bar-sizing white-background full-width">
-            <div class="input-and-send flex bar-spacing">
-                <input class="input weight-400" type="text" placeholder="Escreva aqui..." onkeyup="sendWithEnter(event)">
-                <img class="paper-plane-sender" src="assets/paper-plane.png" onclick="sendMessage()" alt="botao de enviar mensagem">
+            <div class="footer-wrapper">
+                <div class="input-and-send flex">
+                    <input class="input weight-400" type="text" placeholder="Escreva aqui..." onkeyup="sendWithEnter(event)">
+                    <img class="paper-plane-sender" src="assets/paper-plane.png" onclick="sendMessage()" alt="botao de enviar mensagem">
+                </div>
+                <div class="show-from-to overflow-container">
+                    <span class="sending-to weight-400 font-size-14">Enviando para</span>
+                    <span class="sending-to to weight-400 font-size-14">Todos</span>
+                    <span class="sending-to privacy weight-400 font-size-14"></span>
+                </div>
             </div>
         </footer>
         <div class="black-ground hidden" onclick="hideSidebar()">
         </div>
         <aside class="sidebar off-screen">
             <div class="sidebar-titles flex centralize">
-                    <span class="font-size-16 weight-700">Carregando...</span>
+                <span class="font-size-16 weight-700">Carregando...</span>
             </div>
         </aside>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="script.js"></script>
         `
+        console.log(response);
     }
     let displayLocation = document.querySelector(".chat");
     displayLocation.innerHTML = '';
@@ -189,15 +197,53 @@ function maintenanceError(error)
     console.log(error);
 }
 
+function selectTo(toSomeone)
+{
+    let checkmarkSwap = document.querySelector(".shown-to");
+    checkmarkSwap.classList.remove("shown-to");
+    checkmarkSwap.classList.add("hidden");
+    checkmarkSwap = toSomeone.querySelector(".hidden");
+    checkmarkSwap.classList.remove("hidden");
+    checkmarkSwap.classList.add("shown-to");
+
+    const getDestination = toSomeone.querySelector(".sidebar-name").innerHTML;
+    const placeDestination = document.querySelector(".to");
+    placeDestination.innerHTML = getDestination;
+}
+
+function selectPrivacy(privacy)
+{
+    let checkmarkSwap = document.querySelector(".shown-privacy");
+    checkmarkSwap.classList.remove("shown-privacy");
+    checkmarkSwap.classList.add("hidden");
+    checkmarkSwap = privacy.querySelector(".hidden");
+    checkmarkSwap.classList.remove("hidden");
+    checkmarkSwap.classList.add("shown-privacy");
+
+    const getDestination = privacy.querySelector(".sidebar-name").innerHTML;
+    const placeDestination = document.querySelector(".privacy");
+    if(getDestination == "Reservadamente")
+        placeDestination.innerHTML = `(${getDestination})`;
+    else
+        placeDestination.innerHTML = '';
+}
+
 function sendMessage()
 {
     let getMessage = document.querySelector(".input");
+    const sendTo = document.querySelector(".to").innerHTML;
+    let privacySetting = document.querySelector(".privacy").innerHTML;
+    if(privacySetting == '')
+        privacySetting = "message";
+    if(privacySetting == "(Reservadamente)")
+        privacySetting = "private_message";
+    console.log(privacySetting);
     const composeMessage =
     {
         from: userName,
-        to: "Todos",
+        to: sendTo,
         text: getMessage.value,
-        type: "message"
+        type: privacySetting
     }
     const postMessage = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", composeMessage);
     getMessage.value = '';
@@ -243,18 +289,18 @@ function loadSidebar(whosOnline)
                     <span class="font-size-16 weight-700 flex centralize">Escolha a visibilidade:</span>
                 </div>
                 <div class="sidebar-items flex margem-gambiarra">
-                    <div class="sidebar-item flex">
+                    <div class="sidebar-item flex" onclick="selectPrivacy(this)">
                         <img class="sidebar-icon" src="/assets/lock-open.png" alt="enviar publicamente">
                         <div class="sidebar-name-and-check flex">
                             <span class="sidebar-name weight-400 font-size-16">Público</span>
-                            <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                            <img class="checkmark shown-privacy" src="/assets/Vector.png" alt="check verde">
                         </div>
                     </div>
-                    <div class="sidebar-item flex">
+                    <div class="sidebar-item flex" onclick="selectPrivacy(this)">
                         <img class="sidebar-icon" src="/assets/lock-closed.png" alt="enviar reservadamente">
                         <div class="sidebar-name-and-check flex">
                             <span class="sidebar-name weight-400 font-size-16">Reservadamente</span>
-                            <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                            <img class="checkmark hidden" src="/assets/Vector.png" alt="check verde">
                         </div>
                     </div>
                 </div>
@@ -263,11 +309,11 @@ function loadSidebar(whosOnline)
         let peopleLoader = document.querySelector(".sidebar-items");
         peopleLoader.innerHTML =
         `
-        <div class="sidebar-item flex">
+        <div class="sidebar-item flex" onclick="selectTo(this)">
             <img class="sidebar-icon" src="/assets/people.png" alt="enviar para todos">
             <div class="sidebar-name-and-check flex">
                 <span class="sidebar-name weight-400 font-size-16">Todos</span>
-                <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                <img class="checkmark shown-to" src="/assets/Vector.png" alt="check verde">
             </div>
         </div>
         `
@@ -275,13 +321,13 @@ function loadSidebar(whosOnline)
         {
             peopleLoader.innerHTML +=
             `
-            <div class="sidebar-item flex">
-                    <img class="sidebar-icon" src="/assets/person-circle.png" alt="">
+            <div class="sidebar-item flex" onclick="selectTo(this)">
+                    <img class="sidebar-icon" src="/assets/person-circle.png" alt="icone de usuário">
                     <div class="sidebar-name-and-check flex">
                         <div class="sidebar-name-container overflow-container">
                             <span class="sidebar-name weight-400 font-size-16">${whosOnline.data[i].name}</span>
                         </div>
-                        <img class="checkmark" src="/assets/Vector.png" alt="check verde">
+                        <img class="checkmark hidden" src="/assets/Vector.png" alt="check verde">
                     </div>
             </div>
             `

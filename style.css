@@ -70,7 +70,7 @@ body
     justify-content: center;
     align-items: center;
 }
-.bar-spacing
+.header-spacing
 {
     width: 100%;
     justify-content: space-between;
@@ -87,6 +87,10 @@ body
 .white-background
 {
     background-color: #fff;
+}
+.weight-300
+{
+    font-weight: 300;
 }
 .weight-400
 {
@@ -172,19 +176,43 @@ body
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
     position: fixed;
     bottom: 0px;
+    flex-direction: column;
+}
+.footer-wrapper
+{
+    width: 100%;
+}
+.input-and-send
+{
+    width: 100%;
+    justify-content: space-between;
 }
 .input
 {
+    margin: 0 0 8px 20px;
     border: none;
     font-size: 18px;
     font-style: italic;
+    padding: 0;
+}
+.input:focus
+{
+    border: none;
 }
 .paper-plane-sender
 {
     width: 26px;
     height: 26px;
+    margin-right: 21px;
 }
-
+.show-from-to
+{
+    margin-left: 21px;
+}
+.sending-to
+{
+    color: #505050;
+}
 .overflow-container
 {
     overflow: hidden;
