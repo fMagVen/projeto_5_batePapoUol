@@ -1,13 +1,14 @@
 let firstTimeLoadingChat = 1;
 let firstTimeLoadingSidebar = 1;
+let userName;
 
 let pageBody = document.querySelector(".body");
 pageBody.innerHTML = '';
 pageBody.innerHTML =
 `
 <div class="login-screen flex centralize">
-    <img class="login-logo" src="/assets/logouologin.png" alt="logo uol">
-    <input class="login-input font-size-18 font-weight-400" type="text" placeholder="Digite seu lindo nome">
+    <img class="login-logo" src="/assets/logouologin.jpg" alt="logo uol">
+    <input class="login-input font-size-18 font-weight-400" type="text" placeholder="Digite seu lindo nome" onkeyup="loginWithEnter(event)">
     <div class="error-align flex centralize">
         <span class="login-name-error font-size-18 font-weight-400"></span>
     </div>
@@ -16,11 +17,15 @@ pageBody.innerHTML =
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
 `
+function loginWithEnter(keyboard) {
+    if (keyboard.key == "Enter") {
+        loginAttempt();
+    }
+}
 
 function loginAttempt()
 {
     let loginName = document.querySelector(".login-input").value;
-    console.log(loginName);
     if(loginName == '')
     {
         let loginNameEmpty = document.querySelector(".login-name-error");
@@ -34,11 +39,13 @@ function loginAttempt()
        return;
     }
     let usernamePromise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: `${loginName}` });
-    usernamePromise.then(connectionMaintenance, loginError);
+    userName = loginName;
+    usernamePromise.then(connectToChat, loginError);
 }
 
-function connectionMaintenance()
+function connectToChat()
 {
+    const keepOnline = setInterval(connectionMaintenance, 5000);
     pageBody.innerHTML = '';
     pageBody.innerHTML =
     `
@@ -52,6 +59,7 @@ function connectionMaintenance()
     const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
     messagesPromise.then(displayMessages, messagesError);
     participantsPromise.then(loadSidebar, messagesError);
+
 }
 
 function loginError(error)
@@ -88,8 +96,8 @@ function displayMessages(response)
         </main>
         <footer class="write-and-send flex centralize bar-sizing white-background full-width">
             <div class="input-and-send flex bar-spacing">
-                <input class="input weight-400" type="text" placeholder="Escreva aqui...">
-                <img class="paper-plane-sender" src="assets/paper-plane.png" alt="botao de enviar mensagem">
+                <input class="input weight-400" type="text" placeholder="Escreva aqui..." onkeyup="sendWithEnter(event)">
+                <img class="paper-plane-sender" src="assets/paper-plane.png" onclick="sendMessage()" alt="botao de enviar mensagem">
             </div>
         </footer>
         <div class="black-ground hidden" onclick="hideSidebar()">
@@ -161,15 +169,60 @@ function displayMessages(response)
     }
 }
 
+function reloadMessages()
+{
+    const messagesPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
+    messagesPromise.then(displayMessages, messagesError);
+}
 function messagesError(error)
 {
     console.log(error);
 }
 
-function reloadMessages()
+function connectionMaintenance()
 {
-    const messagesPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
-    messagesPromise.then(displayMessages, messagesError);
+    const maintenancePromise = axios.post("https://mock-api.driven.com.br/api/v4/uol/status", { name: userName });
+    maintenancePromise.catch(maintenanceError);
+}
+function maintenanceError(error)
+{
+    console.log(error);
+}
+
+function sendMessage()
+{
+    let getMessage = document.querySelector(".input");
+    const composeMessage =
+    {
+        from: userName,
+        to: "Todos",
+        text: getMessage.value,
+        type: "message"
+    }
+    const postMessage = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", composeMessage);
+    getMessage.value = '';
+    postMessage.then(reloadMessages, sendMessageError);
+}
+function sendMessageError(error)
+{
+    console.log(error);
+}
+function sendWithEnter(keyboard)
+{
+    if(keyboard.key == "Enter")
+    {
+        sendMessage();
+    }
+}
+
+function reloadParticipants()
+{
+    const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+    participantsPromise.then(loadSidebar, participantsError);
+}
+function participantsError(error)
+{
+    console.log(error);
 }
 
 function loadSidebar(whosOnline)
@@ -245,12 +298,6 @@ function loadSidebar(whosOnline)
         participantsPromise.then(loadSidebar, messagesError);
     }
 
-}
-
-function reloadParticipants()
-{
-    const participantsPromise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
-    participantsPromise.then(loadSidebar, messagesError);
 }
 
 function showSidebar()

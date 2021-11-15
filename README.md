@@ -10,6 +10,12 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.5
+en --
+send messages globally tapping the paper plane button or the enter key
+pt --
+mande mensagens globalmente pressionando o botão de avião de papael ou a tecla enter
+
 0.4
 en --
 sidebar implemented, it shows the active users in the chat
