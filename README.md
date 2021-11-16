@@ -10,6 +10,24 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+1.0
+en --
+final version released
+pt --
+lançamento da versão final
+
+0.8.4
+en --
+further testing, message text area now slightly bigger
+pt --
+mais testes, area de texto de mensagens agora um pouco maior
+
+0.8.3
+en --
+updated small visual details to fit as in figma
+pt --
+atualizados detalhes visuais pequenos para adequar com o que está no figma
+
 0.8.2
 en --
 added more data identifiers i forgot about

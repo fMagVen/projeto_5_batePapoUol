@@ -14,12 +14,14 @@ body
 }
 .login-input
 {
+    all: unset;
     border: 1px solid #D7D7D7;
     border-radius: 4px;
     height: 54px;
     width: 261px;
     text-align: center;
     margin-top: 94px;
+    color: #000;
 }
 .login-input::placeholder
 {
@@ -193,8 +195,14 @@ body
     margin: 0 0 8px 20px;
     border: none;
     font-size: 18px;
-    font-style: italic;
     padding: 0;
+    color: #000;
+    width: 75%;
+}
+.input::placeholder
+{
+    font-style: italic;
+    color: #000;
 }
 .paper-plane-sender
 {
