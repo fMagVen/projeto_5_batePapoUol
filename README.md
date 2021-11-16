@@ -10,6 +10,14 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.8
+en --
+added data identifier attribute on requested elements to speed up evaluation and feedback
+removed code snippets placed for debugging
+pt --
+adicionado atributo data identifier nos elementos requisitados para acelerar a correção e feedback
+removido pedaços de código colocados para depuração
+
 0.7
 en --
 it is now only possible to see private messages to and from you, including private messages directed to everyone

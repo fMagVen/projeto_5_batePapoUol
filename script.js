@@ -8,11 +8,11 @@ pageBody.innerHTML =
 `
 <div class="login-screen flex centralize">
     <img class="login-logo" src="/assets/logouologin.jpg" alt="logo uol">
-    <input class="login-input font-size-18 font-weight-400" type="text" placeholder="Digite seu lindo nome" onkeyup="loginWithEnter(event)">
+    <input class="login-input font-size-18 font-weight-400" type="text" placeholder="Digite seu lindo nome" onkeyup="loginWithEnter(event)" data-identifier="enter-name">
     <div class="error-align flex centralize">
         <span class="login-name-error font-size-18 font-weight-400"></span>
     </div>
-    <button class="login-button"><span class="login-bt-text weight-400 font-size-18" onclick="loginAttempt()">Entrar</span></button>
+    <button class="login-button" data-identifier="start"><span class="login-bt-text weight-400 font-size-18" onclick="loginAttempt()">Entrar</span></button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
@@ -64,15 +64,12 @@ function connectToChat()
 
 function loginError(error)
 {
-    console.log(error);
     if (error == "Error: Request failed with status code 400")
     {
-        console.log(error);
         const loginNameTaken = document.querySelector(".login-name-error");
         loginNameTaken.innerHTML = "Esse nome de usuário já está<br>sendo usado, escolha outro!"
     }
     else {
-        console.log(error);
         const loginFail = document.querySelector(".login-name-error");
         loginFail.innerHTML = "Houve uma falha no servidor, tente novamente mais tarde!"
     }
@@ -98,7 +95,7 @@ function displayMessages(response)
             <div class="footer-wrapper">
                 <div class="input-and-send flex">
                     <input class="input weight-400" type="text" placeholder="Escreva aqui..." onkeyup="sendWithEnter(event)">
-                    <img class="paper-plane-sender" src="assets/paper-plane.png" onclick="sendMessage()" alt="botao de enviar mensagem">
+                    <img class="paper-plane-sender" src="assets/paper-plane.png" onclick="sendMessage()" alt="botao de enviar mensagem" data-identifier="send-message">
                 </div>
                 <div class="show-from-to overflow-container">
                     <span class="sending-to weight-400 font-size-14">Enviando para</span>
@@ -117,7 +114,6 @@ function displayMessages(response)
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="script.js"></script>
         `
-        console.log(response);
     }
     let lastMessageOld = document.querySelector(".chat").lastChild;
     let displayLocation = document.querySelector(".chat");
@@ -128,7 +124,7 @@ function displayMessages(response)
         {
             displayLocation.innerHTML +=
             `
-            <div class="message-container-external full-width enter-leave">
+            <div class="message-container-external full-width enter-leave" data-identifier="message">
                 <div class="message-container-internal overflow-container">
                     <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                     <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
@@ -141,7 +137,7 @@ function displayMessages(response)
         {
             displayLocation.innerHTML +=
             `
-            <div class="message-container-external full-width public">
+            <div class="message-container-external full-width public" data-identifier="message">
                 <div class="message-container-internal overflow-container">
                     <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                     <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
@@ -158,7 +154,7 @@ function displayMessages(response)
             {
                 displayLocation.innerHTML +=
                 `
-                <div class="message-container-external full-width private">
+                <div class="message-container-external full-width private" data-identifier="message">
                     <div class="message-container-internal overflow-container">
                         <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
                         <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
@@ -175,8 +171,6 @@ function displayMessages(response)
     const lastMessage = displayLocation.lastChild;
     if(lastMessage.innerHTML != lastMessageOld.innerHTML)
     {
-        console.log(lastMessage);
-        console.log(lastMessageOld);
         lastMessage.scrollIntoView();
     }
     if(firstTimeLoadingChat)
@@ -246,7 +240,6 @@ function sendMessage()
         privacySetting = "message";
     if(privacySetting == "(Reservadamente)")
         privacySetting = "private_message";
-    console.log(privacySetting);
     const composeMessage =
     {
         from: userName,
