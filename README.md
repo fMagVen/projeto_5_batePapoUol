@@ -10,6 +10,12 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.8.2
+en --
+added more data identifiers i forgot about
+pt --
+adicionados mais data identifiers que me esqueci
+
 0.8.1
 en --
 fixed a bug a person's user name would continue in the setting to be sent a message to after they left

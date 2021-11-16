@@ -12,7 +12,7 @@ pageBody.innerHTML =
     <div class="error-align flex centralize">
         <span class="login-name-error font-size-18 font-weight-400"></span>
     </div>
-    <button class="login-button" data-identifier="start"><span class="login-bt-text weight-400 font-size-18" onclick="loginAttempt()">Entrar</span></button>
+    <button class="login-button" onclick="loginAttempt()" data-identifier="start"><span class="login-bt-text weight-400 font-size-18">Entrar</span></button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
@@ -291,14 +291,14 @@ function loadSidebar(whosOnline)
                     <span class="font-size-16 weight-700 flex centralize">Escolha a visibilidade:</span>
                 </div>
                 <div class="sidebar-items flex margem-gambiarra">
-                    <div class="sidebar-item flex" onclick="selectPrivacy(this)">
+                    <div class="sidebar-item flex" onclick="selectPrivacy(this)" data-identifier="visibility">
                         <img class="sidebar-icon" src="/assets/lock-open.png" alt="enviar publicamente">
                         <div class="sidebar-name-and-check flex">
                             <span class="sidebar-name weight-400 font-size-16">Público</span>
                             <img class="checkmark shown-privacy" src="/assets/Vector.png" alt="check verde">
                         </div>
                     </div>
-                    <div class="sidebar-item flex" onclick="selectPrivacy(this)">
+                    <div class="sidebar-item flex" onclick="selectPrivacy(this)" data-identifier="visibility">
                         <img class="sidebar-icon" src="/assets/lock-closed.png" alt="enviar reservadamente">
                         <div class="sidebar-name-and-check flex">
                             <span class="sidebar-name weight-400 font-size-16">Reservadamente</span>
@@ -341,7 +341,7 @@ function loadSidebar(whosOnline)
             {
                 peopleLoader.innerHTML +=
                 `
-                <div class="sidebar-item flex" onclick="selectTo(this)">
+                <div class="sidebar-item flex" onclick="selectTo(this)" data-identifier="participant">
                     <img class="sidebar-icon" src="/assets/person-circle.png" alt="icone de usuário">
                     <div class="sidebar-name-and-check flex">
                         <div class="sidebar-name-container overflow-container">
@@ -356,7 +356,7 @@ function loadSidebar(whosOnline)
             {
                 peopleLoader.innerHTML +=
                 `
-                <div class="sidebar-item flex" onclick="selectTo(this)">
+                <div class="sidebar-item flex" onclick="selectTo(this)" data-identifier="participant">
                     <img class="sidebar-icon" src="/assets/person-circle.png" alt="icone de usuário">
                     <div class="sidebar-name-and-check flex">
                         <div class="sidebar-name-container overflow-container">
