@@ -10,6 +10,14 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.7
+en --
+it is now only possible to see private messages to and from you, including private messages directed to everyone
+the chat now only scrolls down to the last message if there is a new one
+pt --
+agora é somente possível visualizar mensagens reservadas para e de você, incluindo mensagens privadas direcionadas a todos
+o chat agora somente rola à última mensagem se houver uma nova
+
 0.6
 en --
 send public or private messages directed to other users online, selecting them on the sidebar

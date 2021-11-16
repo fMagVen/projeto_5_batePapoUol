@@ -189,15 +189,12 @@ body
 }
 .input
 {
+    all: unset;
     margin: 0 0 8px 20px;
     border: none;
     font-size: 18px;
     font-style: italic;
     padding: 0;
-}
-.input:focus
-{
-    border: none;
 }
 .paper-plane-sender
 {

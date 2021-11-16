@@ -119,6 +119,7 @@ function displayMessages(response)
         `
         console.log(response);
     }
+    let lastMessageOld = document.querySelector(".chat").lastChild;
     let displayLocation = document.querySelector(".chat");
     displayLocation.innerHTML = '';
     for(let i = 0; i < response.data.length; i++)
@@ -153,23 +154,31 @@ function displayMessages(response)
         }
         if (response.data[i].type == "private_message")
         {
-            displayLocation.innerHTML +=
-            `
-            <div class="message-container-external full-width private">
-                <div class="message-container-internal overflow-container">
-                    <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
-                    <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
-                    <span class="user-interaction message-format font-size-14">reservadamente para</span>
-                    <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].to}:</span>
-                    <span class="user-message message-format font-size-14">${response.data[i].text}</span>
+            if (response.data[i].to == userName || response.data[i].to == "Todos" || response.data[i].from == userName)
+            {
+                displayLocation.innerHTML +=
+                `
+                <div class="message-container-external full-width private">
+                    <div class="message-container-internal overflow-container">
+                        <span class="time gray-color time-format font-size-14">(${response.data[i].time})</span>
+                        <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].from}</span>
+                        <span class="user-interaction message-format font-size-14">reservadamente para</span>
+                        <span class="user-from-to weight-700 message-format font-size-14">${response.data[i].to}:</span>
+                        <span class="user-message message-format font-size-14">${response.data[i].text}</span>
+                    </div>
                 </div>
-            </div>
-            `
+                `
+            }
         }
     }
     displayLocation.removeChild(displayLocation.lastChild);
     const lastMessage = displayLocation.lastChild;
-    lastMessage.scrollIntoView();
+    if(lastMessage.innerHTML != lastMessageOld.innerHTML)
+    {
+        console.log(lastMessage);
+        console.log(lastMessageOld);
+        lastMessage.scrollIntoView();
+    }
     if(firstTimeLoadingChat)
     {
         firstTimeLoadingChat = 0;
@@ -307,6 +316,8 @@ function loadSidebar(whosOnline)
             `
         }
         let peopleLoader = document.querySelector(".sidebar-items");
+        if (document.querySelector(".to").innerHTML == "Todos")
+        {
         peopleLoader.innerHTML =
         `
         <div class="sidebar-item flex" onclick="selectTo(this)">
@@ -317,11 +328,42 @@ function loadSidebar(whosOnline)
             </div>
         </div>
         `
-        for(let i = 0; i < whosOnline.data.length; i++)
+        }
+        else
         {
-            peopleLoader.innerHTML +=
+            peopleLoader.innerHTML =
             `
             <div class="sidebar-item flex" onclick="selectTo(this)">
+                <img class="sidebar-icon" src="/assets/people.png" alt="enviar para todos">
+                <div class="sidebar-name-and-check flex">
+                    <span class="sidebar-name weight-400 font-size-16">Todos</span>
+                    <img class="checkmark hidden" src="/assets/Vector.png" alt="check verde">
+                </div>
+            </div>
+            `
+        }
+        for(let i = 0; i < whosOnline.data.length; i++)
+        {
+            if (whosOnline.data[i].name == document.querySelector(".to").innerHTML)
+            {
+                peopleLoader.innerHTML +=
+                `
+                <div class="sidebar-item flex" onclick="selectTo(this)">
+                    <img class="sidebar-icon" src="/assets/person-circle.png" alt="icone de usuário">
+                    <div class="sidebar-name-and-check flex">
+                        <div class="sidebar-name-container overflow-container">
+                            <span class="sidebar-name weight-400 font-size-16">${whosOnline.data[i].name}</span>
+                        </div>
+                        <img class="checkmark shown-to" src="/assets/Vector.png" alt="check verde">
+                    </div>
+                </div>
+                `
+            }
+            else
+            {
+                peopleLoader.innerHTML +=
+                `
+                <div class="sidebar-item flex" onclick="selectTo(this)">
                     <img class="sidebar-icon" src="/assets/person-circle.png" alt="icone de usuário">
                     <div class="sidebar-name-and-check flex">
                         <div class="sidebar-name-container overflow-container">
@@ -329,8 +371,16 @@ function loadSidebar(whosOnline)
                         </div>
                         <img class="checkmark hidden" src="/assets/Vector.png" alt="check verde">
                     </div>
-            </div>
-            `
+                </div>
+                `
+            }
+        }
+        if(document.querySelector(".shown-to") == null)
+        {
+            let returnTodos = document.querySelector(".sidebar-item");
+            returnTodos = returnTodos.querySelector(".hidden");
+            returnTodos.classList.remove("hidden");
+            returnTodos.classList.add("shown-to");
         }
         if(firstTimeLoadingSidebar)
         {
