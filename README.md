@@ -10,6 +10,12 @@ Ninguém da geração Z conheceu, e aqui está uma maneira de conferir um pouco 
 
 CHANGELOG - MUDANÇAS
 
+0.8.1
+en --
+fixed a bug a person's user name would continue in the setting to be sent a message to after they left
+pt --
+corrigido um bug que o nome de usuário de uma pessoa continuava configurada como destinatário depois que esta saiu
+
 0.8
 en --
 added data identifier attribute on requested elements to speed up evaluation and feedback

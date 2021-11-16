@@ -374,6 +374,8 @@ function loadSidebar(whosOnline)
             returnTodos = returnTodos.querySelector(".hidden");
             returnTodos.classList.remove("hidden");
             returnTodos.classList.add("shown-to");
+            returnTodos = document.querySelector(".to");
+            returnTodos.innerHTML = "Todos";
         }
         if(firstTimeLoadingSidebar)
         {
